@@ -1,0 +1,14 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    uses: voguing/actions/.github/workflows/main.yml@main
+    with:
+      name: "server"
+    secrets: inherit
