@@ -3,6 +3,8 @@ import { columns } from "./columns";
 import { servers } from "./consts";
 import { Servers } from "./server";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const data = await Promise.all(
     servers.map(async (info) => {
