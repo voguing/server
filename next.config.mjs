@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   webpack: (config, { isServer }) => {
     if (isServer) {
       // 排除 'module-name' 模块
