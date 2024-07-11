@@ -1,7 +1,12 @@
 import { FC } from "react";
-
+import getComposeConfig from "./server/get-compose-config";
 export const Host: FC<{
   host: string;
-}> = ({ host }) => {
-  return <code>{`${host}: docker run -d -p 80:80 nginx`}</code>;
+}> = async ({ host }) => {
+  const { config } = await getComposeConfig(host);
+  return (
+    <pre className="text-xs p-4 bg-muted/40">
+      <code>{config || "暂无配置"}</code>
+    </pre>
+  );
 };

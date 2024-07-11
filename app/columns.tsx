@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, type TableColumn } from "@voguing/components";
-import closeServer from "./server/close-server";
+import getComposeConfig from "./server/get-compose-config";
 
 export const columns: TableColumn<any>[] = [
   { header: "服务器", accessorKey: "host", width: 400 },
@@ -14,7 +14,7 @@ export const columns: TableColumn<any>[] = [
       const { host } = ctx.getValue<any>();
 
       return (
-        <Button variant="link" onClick={() => closeServer(host)}>
+        <Button variant="link" onClick={() => getComposeConfig(host)}>
           关闭
         </Button>
       );
