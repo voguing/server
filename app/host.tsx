@@ -8,12 +8,16 @@ export const Host: FC<{
 }> = async ({ host }) => {
   const { config } = await getComposeConfig(host);
   const { status } = await getComposeStatus(host);
-  // docker compose ls --format json
+  const buttonList = [];
+  if (status === "running") {
+    buttonList.push(<Button key="stop">停止</Button>);
+  }
+
   return (
     <div className="gap-2 flex flex-col">
-      <pre className="text-xs p-4 bg-muted/40">
-        <code>{status === 'running' && <Button>停止</Button>}</code>
-      </pre>
+      {Boolean(buttonList.length) && (
+        <pre className="text-xs p-4 bg-muted/40">{buttonList}</pre>
+      )}
       <pre className="text-xs p-4 bg-muted/40">
         <code>{config || "暂无配置"}</code>
       </pre>
