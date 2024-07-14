@@ -37,7 +37,7 @@ const HostClient = ({ host }: any) => {
       revalidateIfStale: false,
     }
   );
-  const { data: { status } = {}, isLoading: isLoadingStatus } = useSWR(
+  const { data: status = {}, isLoading: isLoadingStatus } = useSWR(
     [host, "status"],
     () => getComposeStatus(host),
     {

@@ -4,8 +4,7 @@ import cache from "../lib/cache";
 import { connect } from "../lib/ssh";
 
 const getComposeStatus = cache({
-  expire: 60,
-  json: true,
+  expire: 30,
   getKey: (host) => {
     return `docker:status:${host}`;
   },
@@ -23,13 +22,11 @@ const getComposeStatus = cache({
 
     ssh.dispose();
 
-    const compose = JSON.parse(stdout || "[]").find(
-      (item: any) => item.ConfigFiles === "/root/docker-compose.yml"
+    return (
+      JSON.parse(stdout || "[]")
+        .find((item: any) => item.ConfigFiles === "/root/docker-compose.yml")
+        ?.Status?.replace(/\(.+\)/, "") || "none"
     );
-
-    return {
-      status: compose?.Status?.replace(/\(.+\)/, "") || "none",
-    };
   },
 });
 
