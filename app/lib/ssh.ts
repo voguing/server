@@ -11,3 +11,12 @@ export const connect = async (host: string) => {
     password: process.env.SSH_PASSWORD,
   });
 };
+
+export const sshExecOnce = (host: string) => async (command: string) => {
+  const ssh = await connect(host);
+  const result = await ssh.execCommand(command);
+
+  ssh.dispose();
+
+  return result;
+};

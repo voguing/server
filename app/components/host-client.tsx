@@ -2,6 +2,7 @@
 
 import { Spinner } from "@radix-ui/themes";
 import { Button, Textarea } from "@voguing/components";
+import Link from "next/link";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import {
@@ -48,6 +49,13 @@ const HostClient = ({ host }: any) => {
 
   const [value, setValue] = useState(config);
   let buttonList: any[] = [];
+  buttonList.push(
+    <Link href={`/logs?host=${host}`}>
+      <Button key="logs" variant="outline">
+        查看日志
+      </Button>
+    </Link>
+  );
   buttonList.push(
     <Button
       key="restart"
