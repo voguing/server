@@ -28,7 +28,12 @@ export const Host: FC<{
   return (
     <div className="gap-2 flex flex-col">
       {config ? (
-        <Textarea value={config} rows={20} className="font-mono text-xs" />
+        <Textarea
+          defaultValue={config}
+          readOnly
+          rows={20}
+          className="font-mono text-xs"
+        />
       ) : (
         <pre className="text-xs p-4 bg-muted/40">
           <code>{"暂无配置"}</code>
