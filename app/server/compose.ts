@@ -16,6 +16,13 @@ export const composeStart = async (host: string) => {
   await ssh.execCommand("docker compose -f /root/docker-compose.yml up -d");
 };
 
+export const composeRestart = async (host: string) => {
+  const ssh = await connect(host);
+  await ssh.execCommand(
+    "docker compose -f /root/docker-compose.yml down && docker compose -f /root/docker-compose.yml up -d"
+  );
+};
+
 export const composeChange = async (host: string, config: string) => {
   const ssh = await connect(host);
 

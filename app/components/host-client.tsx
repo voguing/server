@@ -1,14 +1,14 @@
 "use client";
 
 import { Button, Textarea } from "@voguing/components";
-import { composeChange, composeStart, composeStop } from "../server/compose";
+import { composeChange, composeStart, composeStop, composeRestart } from "../server/compose";
 import { useState } from "react";
 
 const HostClient = ({ config, status, host }: any) => {
   const [value, setValue] = useState(config);
   let buttonList: any[] = [];
   buttonList.push(
-    <Button key="restart" variant="outline" onClick={() => {}}>
+    <Button key="restart" variant="outline" onClick={() => composeRestart(host)}>
       全部重启
     </Button>
   );
