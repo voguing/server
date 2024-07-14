@@ -1,10 +1,10 @@
 "use server";
 
+import fs from "fs-extra";
+import os from "os";
 import path from "path";
 import redis from "../lib/redis";
 import { connect } from "../lib/ssh";
-import os from "os";
-import fs from "fs-extra";
 
 const DOWN_COMMAND = "docker compose -f /root/docker-compose.yml down";
 const UP_COMMAND = "docker compose -f /root/docker-compose.yml up -d";
@@ -12,16 +12,24 @@ const UP_COMMAND = "docker compose -f /root/docker-compose.yml up -d";
 export const composeStop = async (host: string) => {
   const ssh = await connect(host);
   await ssh.execCommand(DOWN_COMMAND);
+  ssh.dispose();
 };
 
 export const composeStart = async (host: string) => {
   const ssh = await connect(host);
-  await ssh.execCommand(UP_COMMAND);
+  console.log(
+    await ssh.execCommand(
+      `docker login -u '${process.env.ALIYUN_REGISTRY_USER}' -p '${process.env.ALIYUN_REGISTRY_PASSWORD}' ${process.env.ALIYUN_REGISTRY}`
+    )
+  );
+  await ssh.execCommand(UP_COMMAND).then(console.log);
+  ssh.dispose();
 };
 
 export const composeRestart = async (host: string) => {
   const ssh = await connect(host);
   await ssh.execCommand(`${DOWN_COMMAND} && ${UP_COMMAND}`);
+  ssh.dispose();
 };
 
 export const composeChange = async (host: string, config: string) => {

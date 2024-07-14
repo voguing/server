@@ -1,4 +1,5 @@
 import { Theme } from "@radix-ui/themes";
+import { Toaster } from "@voguing/components";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Theme>{children}</Theme>
+        <Toaster />
       </body>
     </html>
   );

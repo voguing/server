@@ -1,6 +1,6 @@
 import { Card, Tabs } from "@voguing/components";
 import { FC } from "react";
-import { Host } from "./host";
+import HostClient from "./host-client";
 
 export const Servers: FC<{
   servers: { host: string; region: string }[];
@@ -15,7 +15,7 @@ export const Servers: FC<{
         items={servers.map(({ host }) => ({
           title: host,
           value: host,
-          children: <Host host={host} key={host} />,
+          children: <HostClient host={host} key={host} />,
         }))}
       />
     </Card>
