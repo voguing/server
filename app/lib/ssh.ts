@@ -4,6 +4,7 @@ import { NodeSSH } from "node-ssh";
 
 export const connect = async (host: string) => {
   const ssh = new NodeSSH();
+
   return ssh.connect({
     host,
     username: "root",
