@@ -1,9 +1,11 @@
 "use client";
 
 import { Button, Textarea } from "@voguing/components";
-import { composeStart, composeStop } from "../server/compose";
+import { composeChange, composeStart, composeStop } from "../server/compose";
+import { useState } from "react";
 
 const HostClient = ({ config, status, host }: any) => {
+  const [value, setValue] = useState(config);
   let buttonList: any[] = [];
   buttonList.push(
     <Button key="restart" variant="outline" onClick={() => {}}>
@@ -11,7 +13,11 @@ const HostClient = ({ config, status, host }: any) => {
     </Button>
   );
   buttonList.push(
-    <Button key="save" variant="outline">
+    <Button
+      key="save"
+      variant="outline"
+      onClick={() => composeChange(host, value)}
+    >
       保存配置
     </Button>
   );
@@ -37,8 +43,8 @@ const HostClient = ({ config, status, host }: any) => {
     <div className="gap-2 flex flex-col">
       {config ? (
         <Textarea
-          defaultValue={config}
-          readOnly
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           rows={20}
           className="font-mono text-xs"
         />
