@@ -13,6 +13,8 @@ import { useState } from "react";
 const HostClient = ({ config, status, host }: any) => {
   const [value, setValue] = useState(config);
   let buttonList: any[] = [];
+  // 安装 docker 的
+  buttonList.push(<Button key="install-docker">安装 docker</Button>);
   buttonList.push(
     <Button
       key="restart"
@@ -62,18 +64,13 @@ const HostClient = ({ config, status, host }: any) => {
 
   return (
     <div className="gap-2 flex flex-col">
-      {config ? (
-        <Textarea
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          rows={20}
-          className="font-mono text-xs"
-        />
-      ) : (
-        <pre className="text-xs p-4 bg-muted/40">
-          <code>{"暂无配置"}</code>
-        </pre>
-      )}
+      <Textarea
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        rows={20}
+        className="font-mono text-xs"
+      />
+
       {Boolean(buttonList.length) && (
         <pre className="text-xs p-4 bg-muted/60 flex gap-4 justify-end rounded">
           {buttonList}
