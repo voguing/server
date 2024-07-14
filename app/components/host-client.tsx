@@ -9,12 +9,17 @@ import {
   composeSaveAndRestart,
 } from "../server/compose";
 import { useState } from "react";
+import { dockerInstall } from "../server/docker";
 
-const HostClient = ({ config, status, host }: any) => {
+const HostClient = ({
+  config,
+  status,
+  host,
+  dockerVersion,
+  composeVersion,
+}: any) => {
   const [value, setValue] = useState(config);
   let buttonList: any[] = [];
-  // 安装 docker 的
-  buttonList.push(<Button key="install-docker">安装 docker</Button>);
   buttonList.push(
     <Button
       key="restart"
@@ -71,11 +76,27 @@ const HostClient = ({ config, status, host }: any) => {
         className="font-mono text-xs"
       />
 
-      {Boolean(buttonList.length) && (
-        <pre className="text-xs p-4 bg-muted/60 flex gap-4 justify-end rounded">
-          {buttonList}
-        </pre>
-      )}
+      <pre className="text-xs p-4 bg-muted/60 flex gap-4 justify-between items-center rounded">
+        <div className="flex gap-4">
+          {dockerVersion ? (
+            <div>docker: {dockerVersion}</div>
+          ) : (
+            <Button key="install-docker" onClick={() => dockerInstall(host)}>
+              安装 docker
+            </Button>
+          )}
+          {composeVersion ? (
+            <div>compose: {composeVersion}</div>
+          ) : (
+            <Button key="install-docker" onClick={() => dockerInstall(host)}>
+              安装 compose
+            </Button>
+          )}
+        </div>
+        {Boolean(buttonList.length) && (
+          <div className="flex gap-4">{buttonList}</div>
+        )}
+      </pre>
     </div>
   );
 };
