@@ -21,7 +21,7 @@ const getComposeConfig = async (host: string) => {
     await ssh
       .getFile(tmpfile, "/root/docker-compose.yml")
       .catch(async (err) => {
-        await redis.set(redisKey, "", "EX", 60);
+        await redis.set(redisKey, "", "EX", 3600);
         console.log("Error connecting", host, ":", err.message);
       });
     if (!fs.existsSync(tmpfile)) {
@@ -33,7 +33,7 @@ const getComposeConfig = async (host: string) => {
     fs.removeSync(tmpfile);
 
     ssh.dispose();
-    await redis.set(redisKey, result, "EX", 60);
+    await redis.set(redisKey, result, "EX", 3600);
     config = result;
   } else {
     config = redisCache;
