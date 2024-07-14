@@ -41,3 +41,8 @@ export const composeChange = async (host: string, config: string) => {
 
   await redis.set(redisKey, config, "EX", 3600);
 };
+
+export const composeSaveAndRestart = async (host: string, config: string) => {
+  await composeChange(host, config);
+  await composeRestart(host);
+};

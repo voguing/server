@@ -1,24 +1,45 @@
 "use client";
 
 import { Button, Textarea } from "@voguing/components";
-import { composeChange, composeStart, composeStop, composeRestart } from "../server/compose";
+import {
+  composeChange,
+  composeStart,
+  composeStop,
+  composeRestart,
+  composeSaveAndRestart,
+} from "../server/compose";
 import { useState } from "react";
 
 const HostClient = ({ config, status, host }: any) => {
   const [value, setValue] = useState(config);
   let buttonList: any[] = [];
   buttonList.push(
-    <Button key="restart" variant="outline" onClick={() => composeRestart(host)}>
+    <Button
+      key="restart"
+      variant="outline"
+      onClick={() => composeRestart(host)}
+    >
       全部重启
     </Button>
   );
   buttonList.push(
     <Button
       key="save"
+      disabled={config === value}
       variant="outline"
       onClick={() => composeChange(host, value)}
     >
       保存配置
+    </Button>
+  );
+  buttonList.push(
+    <Button
+      key="save"
+      disabled={config === value}
+      variant="outline"
+      onClick={() => composeSaveAndRestart(host, value)}
+    >
+      保存并重启配置
     </Button>
   );
   if (status === "running") {
