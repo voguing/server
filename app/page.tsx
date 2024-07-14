@@ -1,7 +1,7 @@
 import { Card, Table } from "@voguing/components";
 import { columns } from "./columns";
+import { Servers } from "./components/server";
 import { servers } from "./consts";
-import { Servers } from "./server";
 
 export const dynamic = "force-dynamic";
 

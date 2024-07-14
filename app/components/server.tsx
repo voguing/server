@@ -1,5 +1,5 @@
 import { Card, Tabs } from "@voguing/components";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Host } from "./host";
 
 export const Servers: FC<{
