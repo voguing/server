@@ -54,7 +54,7 @@ export const composeRestart = async (host: string) => {
 export const composeChange = async (host: string, config: string) => {
   const ssh = await connect(host);
 
-  const redisKey = `docker-compose:${host}`;
+  const redisKey = `docker:compose:${host}`;
 
   const tmpdir = os.tmpdir();
   const tmpfile = path.join(tmpdir, "docker-compose.yml");
