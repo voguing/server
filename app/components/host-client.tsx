@@ -16,8 +16,11 @@ import { dockerInstall } from "../server/docker";
 import getComposeConfig from "../server/get-compose-config";
 import getComposeStatus from "../server/get-compose-status";
 import getDockerStatus from "../server/get-docker-version";
+import { Modal } from "antd";
 
 const HostClient = ({ host }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [contents, setContents] = useState<any[]>([]);
   const {
     data: { dockerVersion, composeVersion } = {},
     isLoading: isLoadingDocker,
@@ -50,10 +53,8 @@ const HostClient = ({ host }: any) => {
   const [value, setValue] = useState(config);
   let buttonList: any[] = [];
   buttonList.push(
-    <Link href={`/logs?host=${host}`}>
-      <Button key="logs" variant="outline">
-        查看日志
-      </Button>
+    <Link key="logs" href={`/logs?host=${host}`}>
+      <Button variant="outline">查看日志</Button>
     </Link>
   );
   buttonList.push(
@@ -92,7 +93,13 @@ const HostClient = ({ host }: any) => {
       <Button
         key="stop"
         variant="destructive"
-        onClick={() => composeStop(host).then(() => mutate([host, "status"]))}
+        onClick={async () => {
+          setIsOpen(true);
+          const eventSource = new EventSource(`/api/stop?host=${host}`);
+          eventSource.onmessage = (event) => {
+            setContents((c) => [...c, event.data]);
+          };
+        }}
       >
         全部停止
       </Button>
@@ -110,6 +117,16 @@ const HostClient = ({ host }: any) => {
 
   return (
     <div className="gap-2 flex flex-col">
+      <Modal
+        title="Basic Modal"
+        open={isOpen}
+        onOk={() => setIsOpen(false)}
+        onCancel={() => setIsOpen(false)}
+      >
+        {contents.map((content, index) => (
+          <p key={index}>{content}</p>
+        ))}
+      </Modal>
       {isLoading ? (
         <Spinner />
       ) : (

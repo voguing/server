@@ -25,7 +25,7 @@ const cache = <T extends (args: any) => any>({
   }) as T;
 };
 
-export const write = <T extends (args: any) => any>({
+export const write = <T extends (...args: any) => any>({
   getKey,
   expire,
   request,

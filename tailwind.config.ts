@@ -1,12 +1,15 @@
 import type { Config } from "tailwindcss";
 
-const config: Config = {
+const config = {
+  darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@voguing/components/dist/**/*.{js,jsx,ts,tsx}", // 确保包含组件库路径
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+    "./node_modules/@voguing/components/dist/**/*.{js,jsx,ts,tsx}",
   ],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -73,5 +76,6 @@ const config: Config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-};
+} satisfies Config;
+
 export default config;

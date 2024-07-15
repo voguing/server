@@ -16,9 +16,9 @@ export const composeStop = write({
   getKey(host) {
     return `docker:status:${host}`;
   },
-  request: async (host: string) => {
+  request: async (host: string, callback: any) => {
     const ssh = await connect(host);
-    await ssh.execCommand(DOWN_COMMAND);
+    await ssh.execCommand(DOWN_COMMAND, );
     ssh.dispose();
 
     return "none";
@@ -35,7 +35,15 @@ export const composeStart = write({
     const ssh = await connect(host);
     console.log(
       await ssh.execCommand(
-        `docker login -u '${process.env.ALIYUN_REGISTRY_USER}' -p '${process.env.ALIYUN_REGISTRY_PASSWORD}' ${process.env.ALIYUN_REGISTRY}`
+        `docker login -u '${process.env.ALIYUN_REGISTRY_USER}' -p '${process.env.ALIYUN_REGISTRY_PASSWORD}' ${process.env.ALIYUN_REGISTRY}`,
+        {
+          onStdout(chunk) {
+            console.log(chunk.toString());
+          },
+          onStderr(chunk) {
+            console.log(chunk.toString());
+          },
+        }
       )
     );
     await ssh.execCommand(UP_COMMAND).then(console.log);
